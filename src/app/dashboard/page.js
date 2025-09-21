@@ -8,14 +8,12 @@ export default function Dashboard() {
   const [videos, setVideos] = useState([]);
   const router = useRouter();
 
-  // Fetch logged-in user
   useEffect(() => {
     fetch(`${API_URL}/auth/me`, { credentials: "include" })
       .then(res => res.json())
       .then(data => setUser(data.user));
   }, [API_URL]);
 
-  // Fetch uploaded videos
   const fetchVideos = async () => {
     const res = await fetch(`${API_URL}/youtube/my-videos`); 
     const data = await res.json();

@@ -10,7 +10,7 @@ export default function VideoDetail() {
   const [video, setVideo] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [isEditing, setIsEditing] = useState(false); // NEW: edit mode
+  const [isEditing, setIsEditing] = useState(false); 
 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -20,16 +20,23 @@ export default function VideoDetail() {
 
   const [logs, setLogs] = useState([]);
 
-  // Fetch video details
+   const fetchLogs = async () => {
+    const res = await fetch(`${API_URL}/youtube/logs?videoId=${videoId}`);
+    const data = await res.json();
+    setLogs(data.logs || []);
+  };
+
+
   const fetchVideo = async () => {
     const res = await fetch(`${API_URL}/youtube/video?videoId=${videoId}`);
     const data = await res.json();
+
+    fetchLogs();
     setVideo(data.video);
     setTitle(data.video.snippet.title);
     setDescription(data.video.snippet.description);
   };
 
-  // Update video
   const saveVideo = async () => {
     await fetch(`${API_URL}/youtube/video`, {
       method: "PUT",
@@ -37,10 +44,10 @@ export default function VideoDetail() {
       body: JSON.stringify({ videoId, title, description }),
     });
     await fetchVideo();
-    setIsEditing(false); // exit edit mode
+    fetchLogs();
+    setIsEditing(false); 
   };
 
-  // Comments
   const fetchComments = async () => {
     const res = await fetch(`${API_URL}/youtube/comments?videoId=${videoId}`);
     const data = await res.json();
@@ -55,17 +62,9 @@ export default function VideoDetail() {
     });
     setNewComment("");
     fetchComments();
-  };
-  const deleteComment = async (commentId) => {
-    await fetch(`${API_URL}/youtube/comments`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ commentId }),
-    });
-    fetchComments();
+    fetchLogs();
   };
 
-  // Notes
   const fetchNotes = async () => {
     const res = await fetch(`${API_URL}/youtube/notes?videoId=${videoId}`);
     const data = await res.json();
@@ -80,20 +79,13 @@ export default function VideoDetail() {
     });
     setNoteText("");
     fetchNotes();
-  };
-
-  // Logs
-  const fetchLogs = async () => {
-    const res = await fetch(`${API_URL}/youtube/logs?videoId=${videoId}`);
-    const data = await res.json();
-    setLogs(data.logs || []);
+    fetchLogs();
   };
 
   useEffect(() => {
     fetchVideo();
     fetchComments();
     fetchNotes();
-    fetchLogs();
   }, [videoId]);
 
   if (!video) return <p>Loading...</p>;

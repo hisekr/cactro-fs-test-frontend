@@ -20,35 +20,27 @@ export default function Home() {
           </a>
         </div>
         
-        <div className="flex items-center mb-8">
-          <div className="flex-grow border-t border-gray-200"></div>
-          <span className="mx-4 text-gray-500 text-sm">or use test credentials</span>
-          <div className="flex-grow border-t border-gray-200"></div>
-        </div>
-        
-        {/* <div className="text-center">
-          <h2 className="text-lg font-medium text-gray-800 mb-4">Test Account</h2>
+
+        <div className="text-center">
+          <h2 className="text-lg font-medium text-gray-800 mb-4">Use This Test Account to login</h2>
           
           <div className="space-y-3 mb-4">
             <div>
               <p className="text-sm text-gray-600 mb-1">Email:</p>
               <div className="flex justify-center items-center">
-                <span className="text-gray-800 bg-gray-100 px-4 py-2 rounded">testuser@example.com</span>
+                <span className="text-gray-800 bg-gray-100 px-4 py-2 rounded">cactrotest@gmail.com</span>
               </div>
             </div>
             
             <div>
               <p className="text-sm text-gray-600 mb-1">Password:</p>
               <div className="flex justify-center items-center">
-                <span className="text-gray-800 bg-gray-100 px-4 py-2 rounded">testpassword123</span>
+                <span className="text-gray-800 bg-gray-100 px-4 py-2 rounded">cactrotest@123</span>
               </div>
             </div>
           </div>
           
-          <p className="text-sm text-gray-500">
-            Use these credentials to test the application
-          </p>
-        </div> */}
+        </div>
       </div>
     </div>
   );
